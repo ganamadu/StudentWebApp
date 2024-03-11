@@ -1,6 +1,8 @@
 package com.stud.service;
 
 import com.stud.core.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -8,15 +10,17 @@ import java.util.List;
 
 @Service
 public class StudentService {
+    private static final Logger LOGGER =
+            LoggerFactory.getLogger(StudentService.class);
 
     public Student save(Student student) {
-        System.out.println("Service: Called the save Student method....");
+        LOGGER.info("Service: Called the save Student method....");
         student.setSno(1);
         return student;
     }
 
     public List<Student> getStudents() {
-        System.out.println("Service: Called the getStudents List method....");
+        LOGGER.info("Service: Called the getStudents List method....");
         List<Student> studList = new ArrayList<>(   );
         Student stud = new Student();
         stud.setSno(1);
@@ -37,7 +41,7 @@ public class StudentService {
     }
 
     public Student getStudentById(Integer sno) {
-        System.out.println("Service: Called the getStudentById method....");
+        LOGGER.info("Service: Called the getStudentById method....");
         Student stud = new Student();
         stud.setSno(sno);
         stud.setSname("Ganapathi");;
