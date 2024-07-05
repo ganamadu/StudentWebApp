@@ -37,4 +37,9 @@ public class StudentController {
         return studentService.getStudentById(sno);
     }
 
+    @GetMapping("/msg")
+    public String getMessage() {
+        return "Hello, This is V1 message....";
+    }
+
 }
