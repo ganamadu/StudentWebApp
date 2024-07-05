@@ -6,7 +6,10 @@ metadata:
 spec:
   replicas: 2
   strategy:
-    type: Recreate
+    rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1
+    minReadySeconds: 5
   selector:
     matchLabels:
       app: studentwebapp
