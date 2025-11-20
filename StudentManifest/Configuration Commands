@@ -3,3 +3,96 @@ docker build -f Dockerfile -t student_web_app .
 docker run -d -p 10555:8080 student_web_app
 docker tag student_web_app thannidocer/studentwebapp
 docker push thannidocer/studentwebapp
+
+#Instll Minikube
+
+minikube version
+
+minikube start --driver=docker
+
+Go to the directory:
+/home/thanni/Documents/git-workspace/StudentWebApp/StudentManifest
+
+Run the below commend run the yml file
+kubectl apply -f studentwebappdeployment.yml
+
+Run the commadns:
+kubectl get pods -o wide
+kubectl get svc
+kubectl get rs
+kubectl delete all --all
+kubectl get deployment
+kubectl scale deployment javastudwebapp --replicas 5
+
+kubectl  get pods –o all
+
+Deployment internally used by the ReplicySet.
+Delete Deployment:
+Kubectl delete deployment <<deployment_name>>
+Kubectl delete deployment studentdemodeployment  If you delete the deployment all pods are deleed.
+
+kubectl delete deployment studentdemodeployment
+
+1. List all Pods
+    kubectl get pods
+    Add -o wide to see Node/IP info:
+    kubectl get pods -o wide
+
+2. Check Pod details
+    kubectl describe pod <pod-name>
+    This shows events, container state, restarts, readiness, failures.
+
+3. Check Pod logs
+    For your Spring Boot app container:
+    kubectl logs <pod-name>
+    If multiple containers inside the pod:
+    kubectl logs <pod-name> -c studentwebappcontainer
+    Follow logs like tail -f:
+    kubectl logs -f <pod-name>
+
+4. Exec inside the pod
+    Useful to test connectivity or debug:
+    kubectl exec -it <pod-name> -- /bin/bash
+    or if alpine-based:
+    kubectl exec -it <pod-name> -- sh
+
+5. Test application from inside the cluster
+    A — Using kubectl port-forward (most convenient)
+        kubectl port-forward service/studentwebappsvc 8080:80
+        Now you can access your service locally:
+        http://localhost:8080
+    B — Using Service NodePort (Minikube)
+        Check service:
+        kubectl get svc studentwebappsvc
+        Then get Minikube IP:
+        minikube ip
+        Example access:
+        http://<minikube-ip>:30785
+
+6. Test if Pod is responding internally
+    Inside the pod:
+    kubectl exec -it <pod-name> -- curl http://localhost:8080
+
+7. Check Pod events (crashes, restarts)
+    kubectl get pods
+    kubectl describe pod <pod-name> | grep -i 'error\|fail\|crash'
+
+8. Common things to verify for Spring Boot app
+    Pod is in Running state
+    kubectl get pods
+
+    Container logs show app has started
+    kubectl logs <pod>
+
+    Service is created
+    kubectl get svc
+
+    Port-forward test works
+    kubectl port-forward svc/studentwebappsvc 8080:80
+
+    Minikube NodePort test works
+    http://<minikube-ip>:30785
+
+kubectl get pods -o wide
+kubectl get svc
+
